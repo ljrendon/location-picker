@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Maps Location Picker</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC24hD1-VEtP_WFSrvjFI-9XGVTQwpzlnM"></script>
+    <style>
+        #map { height: 400px; width: 100%; }
+    </style>
+</head>
+<body>
+    <h1>Pick a Location</h1>
+    <div id="map"></div>
+    <p>Latitude: <span id="latitude"></span></p>
+    <p>Longitude: <span id="longitude"></span></p>
+    <script>
+        let map, marker;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: -0.2299, lng: -78.5249 }, // Default to Quito, Ecuador
+                zoom: 8,
+            });
+
+            map.addListener("click", (e) => {
+                const latLng = e.latLng.toJSON();
+                document.getElementById("latitude").innerText = latLng.lat;
+                document.getElementById("longitude").innerText = latLng.lng;
+
+                if (marker) marker.setMap(null);
+                marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                });
+            });
+        }
+
+        window.onload = initMap;
+    </script>
+</body>
+</html>
